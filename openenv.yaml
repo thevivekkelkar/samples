@@ -1,0 +1,57 @@
+# =============================================================
+# openenv.yaml  —  SmartCity Traffic Control System
+# =============================================================
+# This file tells the OpenEnv framework about your environment.
+# It's required for deployment to HuggingFace Spaces.
+#
+# DO NOT MODIFY unless you know what you're doing.
+# =============================================================
+
+name: smartcity-traffic
+display_name: "SmartCity Traffic Control System"
+version: "2.0.0"
+
+description: |
+  Multi-agent traffic control environment for a 2×2 city grid.
+  4 AI agents manage intersections with Federated Q-Learning.
+  Theme: Multi-Agent Interactions (OpenEnv Hackathon Round 2)
+
+author: "Vivek Kailas Kelkar"
+tags:
+  - multi-agent
+  - traffic-control
+  - reinforcement-learning
+  - openenv
+  - hackathon
+
+environment:
+  # Entry point: module.class_name
+  class: "server.smartcity_traffic_environment:CityTrafficEnvironment"
+  
+  # The action and observation types
+  action_type: "models:TrafficAction"
+  observation_type: "models:TrafficObservation"
+  state_type: "models:CityState"
+
+# Server configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  # These are set by the framework — don't edit
+  max_concurrent_envs: 10
+
+# Docker configuration
+docker:
+  # Base image — MUST be openenv-base
+  base_image: "ghcr.io/meta-pytorch/openenv-base:latest"
+  
+  # Dockerfile location
+  dockerfile: "Dockerfile"
+
+# HuggingFace Spaces configuration
+huggingface:
+  # Your HF username/org — fill this in later
+  repo_id: "YOUR_USERNAME/smartcity-traffic"
+  
+  # Make it public so judges can access
+  private: false
