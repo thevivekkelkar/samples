@@ -140,19 +140,19 @@ def plot_reward_curve(episode_rewards: list, config: dict):
         label="Smoothed (10-ep avg)"
     )
 
-    # Mark every federation event with a vertical orange line
-    for ep in range(
-        config["federation_interval"],
-        len(episode_rewards) + 1,
-        config["federation_interval"]
-    ):
-        ax1.axvline(x=ep, color="orange", alpha=0.25, linewidth=0.8)
-
-    # Add one labeled line for legend
-    ax1.axvline(x=config["federation_interval"],
-                color="orange", alpha=0.5, linewidth=1,
-                label="Federation event")
-
+# Mark ALL federation events with orange lines
+first_fed = True
+for ep in range(
+    config["federation_interval"],
+    len(episode_rewards) + 1,
+    config["federation_interval"]
+):
+    if first_fed:
+        ax1.axvline(x=ep, color="orange", alpha=0.6,
+                    linewidth=1.2, label="Federation event")
+        first_fed = False
+    else:
+        ax1.axvline(x=ep, color="orange", alpha=0.4, linewidth=0.8)
     # Show improvement number
     if len(episode_rewards) >= 20:
         first = float(np.mean(episode_rewards[:10]))
